@@ -36,7 +36,7 @@ class Encryptor
        output_filename = filename.gsub("encrypted", "decrypted")
      else
        output_filename = "#{filename}.encrypted"\
-     end 
+     end
      output_file = File.open(output_filename, "w")
      # Create output file handle
      # Write out the text
@@ -48,6 +48,16 @@ class Encryptor
 
    def decrypt_file(filename, rotation)
      encrypt_file(filename, -rotation, false)
+   end
+
+   def supported_characters
+     (' '..'z').to_a
+   end
+
+   def crack(message)
+     supported_characters.count.times.collect do |attempt|
+       decrypt(message, attempt)
+     end 
    end
 
 end
